@@ -1,9 +1,23 @@
 <h1><%= @album.name %></h1>
 <h3><%= @album.genre %></h3>
 
+<% if @album.songs.any? %>
+  <h4>Track List</h4>
+
+  <ul>
+    <% @album.songs.each do |song| %>
+      <li><%= link_to song.name, album_song_path(@album, song) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No songs listed yet for this album.</p>
+<% end %>
+
+<p><%= link_to "Add a song", new_album_song_path(@album) %></p>
+
 <p><%= link_to "Edit", edit_album_path(@album) %></p>
 <p><%= link_to "Delete", album_path(@album),
-                        :data => {:confirm => "You sure?",
-                        :method => "delete"} %></p>
+  :data => {:confirm => "You sure?",
+  :method => "delete"} %></p>
 
 <p><%= link_to "Return to albums", albums_path %></p>
