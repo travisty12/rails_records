@@ -13,6 +13,7 @@ class AlbumsController < ApplicationController
   def create
     @album = Album.new(album_params)
     if @album.save
+      flash[:notice] = "Album added safely!"
       redirect_to albums_path
     else
       render :new
@@ -32,6 +33,7 @@ class AlbumsController < ApplicationController
   def update
     @album = Album.find(params[:id])
     if @album.update(album_params)
+      flash[:notice] = "Album updated safely!"
       redirect_to albums_path
     else
       render :edit

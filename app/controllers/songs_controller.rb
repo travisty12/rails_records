@@ -9,6 +9,7 @@ class SongsController < ApplicationController
     @album = Album.find(params[:album_id])
     @song = @album.songs.new(song_params)
     if @song.save
+      flash[:notice] = "Song added safely!"
       redirect_to album_path(@album)
     else
       render :new
@@ -30,6 +31,7 @@ class SongsController < ApplicationController
   def update
     @song = Song.find(params[:id])
     if @song.update(song_params)
+      flash[:notice] = "Song updated safely!"
       redirect_to album_path(@song.album)
     else
       render :edit
