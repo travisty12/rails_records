@@ -12,6 +12,7 @@ class SongsController < ApplicationController
       flash[:notice] = "Song added safely!"
       redirect_to album_path(@album)
     else
+      flash[:notice] = "Song could not be added."
       render :new
     end
   end
@@ -34,6 +35,7 @@ class SongsController < ApplicationController
       flash[:notice] = "Song updated safely!"
       redirect_to album_path(@song.album)
     else
+      flash[:notice] = "Song could not be updated."
       render :edit
     end
   end
@@ -41,6 +43,7 @@ class SongsController < ApplicationController
   def destroy
     @song = Song.find(params[:id])
     @song.destroy
+    flash[:notice] = "Song deleted safely!"
     redirect_to album_path(@song.album)
   end
     

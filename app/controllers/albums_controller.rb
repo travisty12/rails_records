@@ -16,6 +16,7 @@ class AlbumsController < ApplicationController
       flash[:notice] = "Album added safely!"
       redirect_to albums_path
     else
+      flash[:notice] = "Album could not be added."
       render :new
     end
   end
@@ -36,6 +37,7 @@ class AlbumsController < ApplicationController
       flash[:notice] = "Album updated safely!"
       redirect_to albums_path
     else
+      flash[:notice] = "Album could not be updated."
       render :edit
     end
   end
@@ -43,6 +45,7 @@ class AlbumsController < ApplicationController
   def destroy
     @album = Album.find(params[:id])
     @album.destroy
+    flash[:notice] = "Album deleted safely!"
     redirect_to albums_path
   end
 
