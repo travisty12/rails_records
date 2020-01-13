@@ -1,4 +1,4 @@
-<h1>Albums</h1>
+<h1>Artists</h1>
 <form class="page">
   <% if @page.to_i > 1 %>
     <button name="page" value="<%= @page.to_i - 1 %>">Back Page</button>
@@ -6,34 +6,34 @@
   <p>Page <%= @page %></p>
   <button name="page" value="<%= @page.to_i + 1 %>">Forward Page</button>
 </form>
-<% if @albums.any? %>
+<% if @artists.any? %>
   <div class="sort">
     <form>
       <% if @search %>
-        <button type="submit">Return to main albums view</button>
+        <button type="submit">Return to main artists view</button>
       <% end %>
       <button name="sort_by" value="name, asc" type="submit">A-Z</button>
       <button name="sort_by" value="name, desc" type="submit">Z-A</button>
       <button name="sort_by" value="created_at, desc" type="submit">Most Recent</button>
       <button name="sort_by" value="created_at, asc" type="submit">Oldest</button>
-      <button name="sort_by" value="most_songs" type="submit">Most Songs</button>
+      <button name="sort_by" value="most_albums" type="submit">Most Songs</button>
     </form>
   </div>
   <ul>
-    <% @albums.each do |album| %>
-      <li><%= link_to album.name, album_path(album) %></li>
+    <% @artists.each do |artist| %>
+      <li><%= link_to artist.name, artist_path(artist) %></li>
     <% end %>
   </ul>
 <% else %>
-  <p>There are no albums yet.</p>
+  <p>There are no artists yet.</p>
 <% end %>
 
-<form action="/albums">
+<form action="/artists">
   <div class="form-group">
-    <label for="search">Search for Album</label>
+    <label for="search">Search for Artist</label>
     <input name="search" type="text" />
   </div>
   <button type="submit" >Go!</button>
 </form>
 
-<p><%= link_to "Create new album", new_album_path %></p>
+<p><%= link_to "Create new artist", new_artist_path %></p>

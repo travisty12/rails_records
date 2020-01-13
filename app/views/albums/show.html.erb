@@ -1,6 +1,29 @@
 <h1><%= @album.name %></h1>
 <h3><%= @album.genre %></h3>
 
+<% if @album.artists.any? %>
+  <h4>Artist List</h4>
+  <form>
+    <ul>
+      <% @album.artists.each do |artist| %>
+        <li><%= link_to artist.name, artist_path(artist) %> -- <button type="submit" name="artist_to_remove" value="<%= artist.id %>">Remove</button></li>
+      <% end %>
+    </ul>
+  </form>
+<% else %>
+  <p>No artists listed yet for this album.</p>
+<% end %>
+
+<form>
+  <label for="artist_to_add">Add artist</label>
+  <select name="artist_to_add">
+    <% @artists.each do |artist| %>
+      <option value="<%= artist.id %>"><%= artist.name %></option>
+    <% end %>
+  </select>
+  <button type="submit">Add</button>
+</form>
+
 <% if @album.songs.any? %>
   <h4>Track List</h4>
 

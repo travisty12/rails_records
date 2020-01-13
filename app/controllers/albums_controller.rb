@@ -1,7 +1,31 @@
 class AlbumsController < ApplicationController
 
   def index
-    @albums = Album.all
+    if params[:page]
+      @page = params[:page]
+    else
+      @page = 1
+    end
+
+    if params[:sort_by]
+      case params[:sort_by]
+      when 'name, asc', 'name, desc', 'created_at, asc', 'created_at, desc'
+        method = params[:sort_by].split(', ')
+        puts method
+        @albums = Album.sort_by_method(method).page(@page)
+      when 'most_songs'
+        @albums = Album.most_songs.page(@page)
+      else
+        flash[:notice] = "Invalid sorting method"
+        @albums = Album.page(@page)
+      end
+    elsif params[:search]
+      @albums = Album.search(params[:search]).page(@page)
+      @search = true
+    else
+      @albums = Album.all.page(@page)
+    end
+    
     render :index
   end
 
@@ -28,6 +52,22 @@ class AlbumsController < ApplicationController
 
   def show
     @album = Album.find(params[:id])
+    if params[:artist_to_add]
+      artist = Artist.find(params[:artist_to_add])
+      if @album.artists.include? artist
+        flash[:notice] = "Relationship already exists!"
+      else
+        @album.artists << artist
+      end
+    elsif params[:artist_to_remove]
+      artist = Artist.find(params[:artist_to_remove])
+      if @album.artists.include? artist
+        @album.artists.delete(artist)
+      else
+        flash[:notice] = "Relationship does not exist."
+      end
+    end
+    @artists = Artist.all
     render :show
   end
 

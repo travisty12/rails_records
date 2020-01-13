@@ -1,0 +1,31 @@
+<h1><%= @artist.name %></h1>
+
+<% if @artist.albums.any? %>
+  <h4>Album List</h4>
+  <form>
+    <ul>
+      <% @artist.albums.each do |album| %>
+        <li><%= link_to album.name, album_path(album) %> -- <button type="submit" name="album_to_remove" value="<%= album.id %>">Remove</button></li>
+      <% end %>
+    </ul>
+  </form>
+<% else %>
+  <p>No albums listed yet for this artist.</p>
+<% end %>
+
+<form>
+  <label for="album_to_add">Add album</label>
+  <select name="album_to_add">
+    <% @albums.each do |album| %>
+      <option value="<%= album.id %>"><%= album.name %></option>
+    <% end %>
+  </select>
+  <button type="submit">Add</button>
+</form>
+
+<p><%= link_to "Edit", edit_artist_path(@artist) %></p>
+<p><%= link_to "Delete", artist_path(@artist),
+  :data => {:confirm => "You sure?",
+  :method => "delete"} %></p>
+
+<p><%= link_to "Return to artists", artists_path %></p>
